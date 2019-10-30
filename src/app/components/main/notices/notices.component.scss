@@ -1,0 +1,43 @@
+.connect{
+    background: #141e46;
+    height: 50px;
+    text-align: center;
+
+    
+}
+.notice{
+    
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 50px;
+    line-height: 50px;
+    position: relative;
+    font-size: 14px;
+
+    &-left{
+        font-size: 14px;
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        left: 20px;
+        color: #00ceff;
+    }
+    &-right{
+        font-size: 14px;
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 20px;
+        color: #97a3b4;
+    }
+    &-main{
+        height: 50px;
+        overflow: hidden;
+
+        ul{
+            margin-top: 0px;
+        }
+    }
+
+}
+

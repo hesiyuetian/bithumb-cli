@@ -1,0 +1,16 @@
+<div class="conect">
+    <div class="bannerBox">
+        <div class="swiper-container" *ngIf="bannerList && bannerList.length > 0">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide banner" [ngClass]="{'swiper-no-swiping':bannerList.length <2 }" *ngFor="let i of bannerList" [style.background-image]="'url('+i+')'">
+                    <span>{{i}}</span>
+                </div>
+            </div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+</div>

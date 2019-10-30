@@ -1,0 +1,43 @@
+{
+  "UAT": {
+    "channel": "XoBPP2vxxHdSFpLaF86EckyjoUWjiGSe3y",
+    "wsUrl": "http://10.0.151.135:9001",
+    "sdkUrl": "http://10.0.151.135:43026",
+    "apiUrl": "http://10.0.151.135:8888",
+    "tag": "UAT",
+    "version": 83951616
+  },
+  "TEST": {
+    "channel": "XoBPP2vxxHdSFpLaF86EckyjoUWjiGSe3y",
+    "wsUrl": "http://test-ws.xtardex.com",
+    "sdkUrl": "http://test-xtar.xtardex.com:43026",
+    "apiUrl": "http://test-api.xtardex.com",
+    "tag": "TEST",
+    "version": 83951616
+  },
+  "BETA": {
+    "channel": "XjE2faGDzVGCm7z5AirgcyDUwGWpw7xAMn",
+    "wsUrl": "wss://beta-wss.lyra.site",
+    "sdkUrl": "http://13.251.182.59:1041",
+    "apiUrl": "https://beta-api.lyra.site",
+    "tag": "BETA",
+    "version": 16842752
+  },
+  "AUTOTEST": {
+    "channel": "XjE2faGDzVGCm7z5AirgcyDUwGWpw7xAMn",
+    "wsUrl": "ws://autotest-ws.xtardex.com",
+    "sdkUrl": "http://10.0.151.61:43026",
+    "apiUrl": "http://autotest-api.xtardex.com",
+    "tag": "AUTOTEST",
+    "version": 83951616
+  },
+  "PRO": {
+    "channel": "AUZ4d82hCeLhKS6nhvz9gRApKfjJwyVQ8B",
+    "Url": "https://test.lyra.site",
+    "sdkUrl": "http://52.76.192.14:43026",
+    "apiUrl": "https://beta-xtar.lyra.site",
+    "tag": "PRO",
+    "version": 65536
+  }
+
+}

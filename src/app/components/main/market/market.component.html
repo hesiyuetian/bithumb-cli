@@ -1,0 +1,115 @@
+<div class="market">
+    <div class="market-top">
+        <div class="search">
+            <input type="text" placeholder="{{'Market.search' | translate}}" [(ngModel)]="tokenName" (keyup)="onTokenNameChange()"  />
+            <span>
+                <i class="iconfont">&#xe619;</i>
+            </span>
+        </div>
+    </div>
+    <div class="market-connect">
+        <div class="market-connect-row">
+            <div class="market-connect-col">
+                <div [ngClass]="{'activated': active === 'optional'}" (click)="activated('optional')">
+                    <label class="iconfont">&#xe642;</label>
+                    <span>{{'Market.optional' | translate}}</span>
+                </div>
+
+                <div [ngClass]="{'activated': active === i}" (click)="activated(i)" *ngFor="let i of symbolList">
+                    <span>{{i}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="market-connect-row">
+            <div class="market-connect-col2 market-connect-col3">
+                <div (click)="tickerSort('pair')">
+                    <span>
+                        {{'Market.transaction' | translate}}
+                         <b *ngIf="step == 'pair'">
+                            <img *ngIf="type" src="../../../../assets/images/sort1.png" />
+                            <img *ngIf="!type" src="../../../../assets/images/sort2.png" />
+                         </b>
+                    </span>
+                </div>
+                <div (click)="tickerSort('price')">
+                    <span>
+                        {{'Market.market' | translate}}
+                        <b *ngIf="step == 'price'">
+                            <img *ngIf="type" src="../../../../assets/images/sort1.png" />
+                            <img *ngIf="!type" src="../../../../assets/images/sort2.png" />
+                        </b>
+                    </span>
+                    
+                </div>
+                <div (click)="tickerSort('change')">
+                    <span>
+                        {{'Market.24UpsDowns' | translate}}
+                        <b *ngIf="step == 'change'">
+                            <img *ngIf="type" src="../../../../assets/images/sort1.png" />
+                            <img *ngIf="!type" src="../../../../assets/images/sort2.png" />
+                        </b>
+                    </span>
+                    
+                </div>
+                <div (click)="tickerSort('high')">
+                    <span>
+                        {{'Market.24Highest' | translate}}
+                        <b *ngIf="step == 'high'">
+                            <img *ngIf="type" src="../../../../assets/images/sort1.png" />
+                            <img *ngIf="!type" src="../../../../assets/images/sort2.png" />
+                        </b>
+                    </span>
+                    
+                </div>
+                <div (click)="tickerSort('low')">
+                    <span>
+                        {{'Market.24Minimum' | translate}}
+                        <b *ngIf="step == 'low'">
+                            <img *ngIf="type" src="../../../../assets/images/sort1.png" />
+                            <img *ngIf="!type" src="../../../../assets/images/sort2.png" />
+                        </b>
+                    </span>
+                    
+                </div>
+                <div (click)="tickerSort('quoteAmount')">
+                    <span>
+                        {{'Market.24Volume' | translate}}
+                        <b *ngIf="step == 'quoteAmount'">
+                            <img *ngIf="type" src="../../../../assets/images/sort1.png" />
+                            <img *ngIf="!type" src="../../../../assets/images/sort2.png" />
+                        </b>
+                    </span>
+                    
+                </div>
+            </div>
+        </div>
+
+        <app-no-data *ngIf=" (!marketShowList || marketShowList.length == 0)"></app-no-data>
+        <!-- <app-load *ngIf="loadStatus"></app-load> -->
+
+        <div class="market-connect-row" *ngFor="let i of marketShowList">
+            <div class="market-connect-col2" (click)="goTo(i.pair)">
+                <div class="market-connect-color2">
+                    <span>{{i.pair.replace('_', '/') || '-'}}</span>
+                    <label class="iconfont" *ngIf="i.collected == 1" (click)="check(i, 0);$event.stopPropagation();">&#xe646;</label>
+                    <label class="iconfont iconfont-check" *ngIf="i.collected == 0" (click)="check(i, 1);$event.stopPropagation();">&#xe642;</label>
+                </div>
+                <div>
+                    <span>{{i.price }}</span>
+                </div>
+                <div [ngClass]="{'up-color': i.change > 0, 'down-color': i.change < 0  }">
+                    <span>{{i.change * 100}}%</span>
+                </div>
+                <div>
+                    <span>{{i.high }}</span>
+                </div>
+                <div>
+                    <span>{{i.low }}</span>
+                </div>
+                <div>
+                    <span>{{i.quoteAmount }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

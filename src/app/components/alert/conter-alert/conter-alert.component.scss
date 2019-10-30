@@ -1,0 +1,95 @@
+@import '../../../skin/mixin.scss';
+
+.alert{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    // color: #fff;
+    @include mixin-font-color();
+    &_mask{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        // background: rgba(0,0,0,.4);
+        @include mixin-dialog-bg();
+    }
+    &_cont{
+        width: 442px;
+        height: auto;
+        // background: #141E46;
+        @include mixin-bg-color();
+        border-radius: 5px;
+        position: relative;
+        .close{
+            position: absolute;
+            right: 20px;
+            top: 15px;
+        }
+        &_head{
+            line-height: 40px;
+            padding: 0 20px;
+            font-size: 16px;
+            border-radius: 3px 3px 0 0;
+        }
+        &_con{
+            padding: 50px 20px 25px;
+            &_cons{
+                margin-bottom: 40px;
+                width: 100%;
+                height: auto;
+                text-align: center;
+            }
+            &_tip{
+                text-indent: 20px;
+                font-size: 14px;
+                opacity: .8;
+            }
+            &_tips{
+                text-align: center;
+                font-size: 16px;
+                margin-top: 17px;
+                font-weight: 800;
+                letter-spacing: 1px;
+            }
+            &_btn{
+                width: 100%;
+                text-align: center;
+                div{
+                    width: 190px;
+                    line-height: 40px;
+                    border-radius: 5px;
+                    text-align: center;
+                    letter-spacing: 1px;
+                    font-size: 14px;
+                    display: inline-block;
+                    font-weight: 600;
+                }
+                &_left{
+                    margin-right: 20px;
+                    background: none;
+                    border: 1px solid #4181FF;
+                    color: #4181FF;
+                }
+                &_left:hover{
+                    background: #4181FF;
+                    color: #fff;
+                }
+                &_right{
+                    // background: rgba(65,129,255, 1);
+                    background: #4181FF;
+                    color: #fff;
+                }
+                &_right:hover{
+                    // background: rgba(65,129,255, .8);
+                    background: #1E5ED9;
+                }
+            }
+        }
+
+    }
+}
