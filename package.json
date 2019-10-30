@@ -1,5 +1,5 @@
 {
-  "name": "eth-oneroot",
+  "name": "Bithumb DEX Exchange",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -9,8 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "clean": "yarn cache clean",
-    "sftp": "publish-sftp -c",
-    "reset": "node publishCI.js"
+    "sftp": "publish-sftp -c"
   },
   "private": true,
   "dependencies": {

@@ -1,14 +1,14 @@
 {
     "Title": {
-        "login": "Login - XTAR Exchange",
-        "register": "Register - XTAR Exchange",
-        "tradHistory": "Transaction History - XTAR Exchange",
-        "openOrder": "Open Orders - XTAR Exchange",
-        "orderHistory": "Order History - XTAR Exchange",
-        "assetList": "Asset List - XTAR Exchange",
-        "assetHistory": "Asset History - XTAR Exchange",
-        "home": "Home - XTAR Exchange",
-        "seeting": "Setting - XTAR Exchange"
+        "login": "Login - Bithumb Exchange",
+        "register": "Register - Bithumb Exchange",
+        "tradHistory": "Transaction History - Bithumb Exchange",
+        "openOrder": "Open Orders - Bithumb Exchange",
+        "orderHistory": "Order History - Bithumb Exchange",
+        "assetList": "Asset List - Bithumb Exchange",
+        "assetHistory": "Asset History - Bithumb Exchange",
+        "home": "Home - Bithumb Exchange",
+        "seeting": "Setting - Bithumb Exchange"
     },
     "Footer": {
         "title": "Bithumb DEX Exchange",

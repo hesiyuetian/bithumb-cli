@@ -1,14 +1,14 @@
 {
     "Title": {
-        "login": "登录 - XTAR交易所",
-        "register": "注册 - XTAR交易所",
-        "tradHistory": "交易历史 - XTAR交易所",
-        "openOrder": "委托订单 - XTAR交易所",
-        "orderHistory": "订单历史 - XTAR交易所",
-        "assetList": "资产中心 - XTAR交易所",
-        "assetHistory": "资产历史 - XTAR交易所",
-        "home": "首页 - XTAR交易所",
-        "seeting": "设置 - XTAR交易所"
+        "login": "登录 - Bithumb交易所",
+        "register": "注册 - Bithumb交易所",
+        "tradHistory": "交易历史 - Bithumb交易所",
+        "openOrder": "委托订单 - Bithumb交易所",
+        "orderHistory": "订单历史 - Bithumb交易所",
+        "assetList": "资产中心 - Bithumb交易所",
+        "assetHistory": "资产历史 - Bithumb交易所",
+        "home": "首页 - Bithumb交易所",
+        "seeting": "设置 - Bithumb交易所"
     },
     "Footer": {
         "title": "Bithumb DEX Exchange",
