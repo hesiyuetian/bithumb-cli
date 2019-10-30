@@ -26,7 +26,7 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "@types/socket.io": "^2.1.2",
     "@types/swiper": "^4.4.4",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "bignumber.js": "^8.0.1",
     "bip39": "2.5.0",
     "bithumb-chain-ts-sdk": "git+http://10.0.151.200/kitvv/bithumb-chain-ts-sdk-release#v0.7.1",
