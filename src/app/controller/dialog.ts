@@ -78,7 +78,7 @@ export class DialogController {
         // if(!config.model || config.model != 'MetamaskTipComponent'){
         //     this.clearDom();
         // }
-        
+
         const factory = this.resolver.resolveComponentFactory(targetComponent);
         let componentRef:any = this.viewContainerRef.createComponent(factory);
 

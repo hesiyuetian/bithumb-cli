@@ -18,7 +18,7 @@ import { DialogController } from '../../../controller/dialog'
 import { Loadings } from '../../loadings/loadings'
 import { ConterAlertComponent } from '../../../components/alert/conter-alert/conter-alert.component'
 import {Subscription} from 'rxjs';
-
+import {AuxBtService} from '../../../service/aux-bt.service';
 
 declare var TradingView;
 declare var Datafeeds;
@@ -44,9 +44,9 @@ export class ContentComponent implements OnInit, OnDestroy {
     public marketShow: boolean = false;
 
 
-    // BTC ===>  USD
-    btcToUsdt: any = 0;
-    usdtVal: any = 0;
+    // // BTC ===>  USD
+    // btcToUsdt: any = 0;
+    // usdtVal: any = 0;
 
     // 是否加入收藏
     isfav: boolean = false;
@@ -70,7 +70,7 @@ export class ContentComponent implements OnInit, OnDestroy {
 
     // 当前的币种
     symbol: string = '';
-    icon: String = 'RNT/ETH';
+    icon: String = 'BTC/USDT';
 
 
     //K线图对象
@@ -110,6 +110,7 @@ export class ContentComponent implements OnInit, OnDestroy {
         private trickerService: TrickerService,
         public dialog: DialogController,
         public resetData: resetData,
+        public auxBt: AuxBtService,
         public translate: TranslateService
     ) {
         this.activatedRouter.params.subscribe(params => {
@@ -146,7 +147,7 @@ export class ContentComponent implements OnInit, OnDestroy {
         this.subThemeServe();
         this.subWsDepthServe();
         this.subWsTickerServe();
-        this.subTickerListServe();
+        // this.subTickerListServe();
         this.subCollectServe();
     }
 
@@ -192,11 +193,11 @@ export class ContentComponent implements OnInit, OnDestroy {
     /**
      * 订阅全部行情服务
      */
-    subTickerListServe(): void{
-        this.subServe.add(this.trickerService.getTickListObservable().subscribe( (res:any) => {
-            this.toUsd(res)
-        }))
-    }
+    // subTickerListServe(): void{
+    //     this.subServe.add(this.trickerService.getTickListObservable().subscribe( (res:any) => {
+    //         this.toUsd(res)
+    //     }))
+    // }
 
     /**
      * 订阅语言服务
@@ -495,13 +496,15 @@ export class ContentComponent implements OnInit, OnDestroy {
             this.isFavStatus = false;
             let data = {
                 pair: ticker,
-                collect: active
+                collect: active,
+                sig: ''
             };
-            this.service.collectPair(data).then((res: any) => {
+
+            const success = (res:any) => {
                 this.isFavStatus = true;
                 if (res.status == 0) {
+                    this.dialog.destroy();
                     this.isfav = !this.isfav;
-
                     let josn = {
                         type: 'update',
                         data: res.data
@@ -510,24 +513,35 @@ export class ContentComponent implements OnInit, OnDestroy {
                 }else{
                     this.load.tipErrorShow(res.msg)
                 }
-            })
+            };
+
+            const unLockAccount = (res:any) => {
+                data.sig = this.auxBt.collectSign(data,res);
+                data.sig && this.service.collectPair(data).then( res => { success(res) })
+            };
+
+            const close = res => {
+                this.isFavStatus = true;
+            };
+
+            this.auxBt.regularPwd(unLockAccount, close)
         }
 
     }
 
 
-    /**
-     * 计算对应usdt的价格
-     * @param tickerList
-     */
-    async toUsd(tickerList){
-        if(!!!this.btcToUsdt) {
-            this.service.getOkexTime().then( res => {
-                this.btcToUsdt = res.data.USDT || 1;
-                this.usdtVal = this.resetData.raleUsdt(this.symbol.split("_")[0],tickerList,1,this.btcToUsdt,this.symbol);
-            })
-        }else this.usdtVal = this.resetData.raleUsdt(this.symbol.split("_")[0],tickerList,1,this.btcToUsdt,this.symbol);
-    }
+    // /**
+    //  * 计算对应usdt的价格
+    //  * @param tickerList
+    //  */
+    // async toUsd(tickerList){
+    //     if(!!!this.btcToUsdt) {
+    //         this.service.getOkexTime().then( res => {
+    //             this.btcToUsdt = res.data.USDT || 1;
+    //             this.usdtVal = this.resetData.raleUsdt(this.symbol.split("_")[0],tickerList,1,this.btcToUsdt,this.symbol);
+    //         })
+    //     }else this.usdtVal = this.resetData.raleUsdt(this.symbol.split("_")[0],tickerList,1,this.btcToUsdt,this.symbol);
+    // }
 
     changeDire(type,direc){
         this[type] = !direc;

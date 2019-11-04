@@ -13,6 +13,18 @@ $opction: .8;
   }
 }
 
+// home banner 背景色  $background-banner
+@mixin mixin-bg-banner-ci(){
+    :host-context([data-theme-style='Light']) & {
+        //background: $color-main url('../../../assets/images/home/banner.svg') no-repeat center center;
+        background: $color-main-cli url('../../../assets/images/home/bannerCli.png') no-repeat center center;
+    }
+    :host-context([data-theme-style="Dark"]) & {
+        //background: $color-main url('../../../assets/images/home/banner.svg') no-repeat center center;
+        background: $color-main-cli url('../../../assets/images/home/bannerCli.png') no-repeat center center;
+    }
+}
+
 // 背景色  $background-banner
 @mixin mixin-bg-banner(){
   :host-context([data-theme-style='Light']) & {
@@ -196,10 +208,12 @@ $opction: .8;
 // input:focus  $color-main
 @mixin mixin-act-border(){
     :host-context([data-theme-style='Light']) & {
-        border-color: $color-main;
+        //border-color: $color-main;
+        border-color: $color-main-cli;   // CLI
     }
     :host-context([data-theme-style="Dark"]) & {
-        border-color: $color-main;
+        //border-color: $color-main;
+        border-color: $color-main-cli;  // CLI
     }
 }
 
@@ -212,7 +226,6 @@ $opction: .8;
       color: $color-main-d !important;
     }
   }
-
 
 // background  $color_blue
 @mixin mixin-color-blue-bg(){
@@ -343,11 +356,11 @@ $opction: .8;
 @mixin mixin-common-btn(){
     :host-context([data-theme-style='Light']) & {
         background: $btn !important;
-        box-shadow: 0px 5px 20px rgba(214, 38, 22, 0.3);
+        //box-shadow: 0px 5px 20px rgba(214, 38, 22, 0.3);
     }
     :host-context([data-theme-style="Dark"]) & {
         background: $btn-d !important;
-        box-shadow: 0px 5px 20px rgba(214, 38, 22, 0.3);
+        //box-shadow: 0px 5px 20px rgba(214, 38, 22, 0.3);
     }
 }
 
@@ -365,11 +378,11 @@ $opction: .8;
 @mixin mixin-common-btn-hover(){
     :host-context([data-theme-style='Light']) & {
         background: $btn-hover !important;
-        box-shadow: 0px 5px 20px rgba(214, 38, 22, 0.2);
+        //box-shadow: 0px 5px 20px rgba(214, 38, 22, 0.2);
     }
     :host-context([data-theme-style="Dark"]) & {
         background: $btn-hover-d !important;
-        box-shadow: 0px 5px 20px rgba(214, 38, 22, 0.2);
+        //box-shadow: 0px 5px 20px rgba(214, 38, 22, 0.2);
     }
 }
 

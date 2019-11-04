@@ -6,12 +6,12 @@ import {TranslateService} from '@ngx-translate/core';
 import {BtService} from '../common/util/bt.service';
 import {User} from '../common/util/user';
 import {Loadings} from '../components/loadings/loadings';
-import {secret} from '../common/util/secret';
 import {RpcClient} from 'bithumb-chain-ts-sdk';
 import {regular} from '../common/util/regular';
 import {DialogController} from '../controller/dialog';
 import {TxComponent} from '../components/dev/tx/tx.component';
 import {AssestComponent} from '../components/dev/assest/assest.component';
+import {DialogPwdComponent} from '../components/dialog-pwd/dialog-pwd.component';
 import {CONFIG} from '../common/util/config';
 import * as BT from 'bithumb-chain-ts-sdk';
 
@@ -38,6 +38,32 @@ interface depositOption {
     to: string,
     value: string
 }
+
+interface collectSignOption {
+    pair: string,
+    collect: boolean,
+    sig: string
+}
+
+interface cancelOrderSignOption {
+    ids: string,
+    sig: string
+}
+
+interface orderSignOption {
+    chain_id: number;
+    pair: string;
+    expire: number;
+    channel: string;
+    side: string;
+    salt: number;
+    price: string;
+    amount: string;
+    user: string;
+    maker_fee_rate: number;
+    taker_fee_rate: number;
+}
+
 
 
 class Query {
@@ -98,22 +124,17 @@ export class AuxBtService implements xtarUtils {
         public xtar: BtService,
         public user: User,
         public load: Loadings,
-        public secret: secret,
         public regular: regular,
         public dialog: DialogController,
         public translate: TranslateService,
     ) {
         this.initClient();
-        // this.create(3,"Aa123456",'f57298b58200800bba2ee9dc54c5b3ce912e54179c3b53a2fde442fd3a6309e3')
-        this.testSign()
-        // this.testAuthorize()
     }
 
     initClient() {
         if (!this.client) {
             this.client = new BT.RpcClient([CONFIG.sdkUrl]);
         }
-
     }
 
     /**
@@ -168,18 +189,12 @@ export class AuxBtService implements xtarUtils {
      * @param option
      * @param password
      */
-    orderSign(option: any, password?): any {
+    orderSign(option: orderSignOption, password?): any {
         let account: any;
         account = this.unluck(password);
         if (account) {
             try {
-                // let orderData = new BT.OrderData(
-                //     option.version, account.address, option.pair, option.side, option.price, option.amount, option.channel, option.maker_fee_rate, option.taker_fee_rate, option.expire, option.salt
-                // );
-                // orderData.Sign(account);
-                // return orderData.signature.serialize();
-
-                const str = `amount=${option.amount}&chain_id=${option.version}&channel=${option.channel}&expire=${option.expire}&maker_fee_rate=${option.maker_fee_rate}&pair=${option.pair}&price=${option.price}&salt=${option.salt}&side=${option.side}&taker_fee_rate=${option.taker_fee_rate}&user=${option.address}`;
+                const str = `amount=${option.amount}&chain_id=${option.chain_id}&channel=${option.channel}&expire=${option.expire}&maker_fee_rate=${option.maker_fee_rate}&pair=${option.pair}&price=${option.price}&salt=${option.salt}&side=${option.side}&taker_fee_rate=${option.taker_fee_rate}&user=${account.address}`;
                 const signature = account.sign(BT.sha256String(str)).serialize();
                 return signature
             } catch (e) {
@@ -202,7 +217,6 @@ export class AuxBtService implements xtarUtils {
             try {
                 const str = `channel=${channel}&timestamp=${time}&user=${user}`;
                 const signature = account.sign(BT.sha256String(str)).serialize();
-                // console.log(account.signHash256(Buffer.from(str).toString('hex')));
                 return signature;
             } catch {
                 return this.load.tipErrorShow(this.translate.instant('common.sigError'));
@@ -212,19 +226,35 @@ export class AuxBtService implements xtarUtils {
 
     /**
      * 收藏签名
-     * @param time
-     * @param user
-     * @param channel
+     * @param params
      * @param password
      */
-    collectSign(time: string, user: string, channel, password?): any {
+    collectSign(params: collectSignOption, password?): any {
         let account: any;
         account = this.unluck(password);
         if (account) {
             try {
-                const str = `channel=${channel}&timestamp=${time}&user=${user}`;
+                const str = `collect=${params.collect}&pair=${params.pair}&user=${account.address}`;
                 const signature = account.sign(BT.sha256String(str)).serialize();
-                // console.log(account.signHash256(Buffer.from(str).toString('hex')));
+                return signature;
+            } catch {
+                return this.load.tipErrorShow(this.translate.instant('common.sigError'));
+            }
+        }
+    }
+
+    /**
+     * 撤单签名
+     * @param params
+     * @param password
+     */
+    cancelOrderSign(params: cancelOrderSignOption, password?): any {
+        let account: any;
+        account = this.unluck(password);
+        if (account) {
+            try {
+                const str = `channel=${CONFIG.channel}&ids=${params.ids}&user=${account.address}`;
+                const signature = account.sign(BT.sha256String(str)).serialize();
                 return signature;
             } catch {
                 return this.load.tipErrorShow(this.translate.instant('common.sigError'));
@@ -509,37 +539,25 @@ export class AuxBtService implements xtarUtils {
     }
 
     /**
-     * testOrderSign
+     * 检验是否需要输入解锁密码
+     * regularPwd
+     * @param callback
      */
-    testSign() {
-        let params = {
-            user: "XjE2faGDzVGCm7z5AirgcyDUwGWpw7xAMn",
-            channel: "XjE2faGDzVGCm7z5AirgcyDUwGWpw7xAMn",
-            version: 0x05010000,
-            pair: "ETH_USD",
-            side: "buy",
-            price: "0.00157899",
-            amount: "100.5",
-            makerFeeRate: "0",
-            takerFeeRate: "0",
-            expire: "0",
-            salt: "1"
-        };
-
-        const str = `amount=${params.amount}&chain_id=${params.version.toString()}&channel=${params.channel}&expire=${params.expire}&maker_fee_rate=${params.makerFeeRate}&pair=${params.pair}&price=${params.price}&salt=${params.salt}&side=${params.side}&taker_fee_rate=${params.takerFeeRate}&user=${params.user}`;
-        const hash1 = BT.sha256String(str);
+    regularPwd(callback:Function, close?:Function ){
+        const time = this.isExpirTime();
+        if(time){
+            let option = {
+                callback: res => {
+                    callback(res);
+                },
+                close: res => {
+                    close && close()
+                }
+            };
+            this.dialog.createFromComponent(DialogPwdComponent,option);
+        }else callback();
     }
 
-    /**
-     * testAuthorizeSign
-     */
-    testAuthorize() {
-        let params = {
-            user: "XjE2faGDzVGCm7z5AirgcyDUwGWpw7xAMn",
-            channel: "XjE2faGDzVGCm7z5AirgcyDUwGWpw7xAMn",
-            salt: 1
-        };
-    }
 }
 
 

@@ -3,11 +3,12 @@
     <div class='home-content'>
         <!--  main  -->
         <div class="home-top">
-            <img class="f-center-x" src="../../../assets/images/bithumb.svg" alt="">
+            <img class="f-center-x" [src]=logoHome alt="">
             <h2 class="f-center-x">{{'home.n1t' | translate}}</h2>
             <div class="f-center-x f-cursor" (click)="link('trade')">{{'home.trade' | translate}}</div>
             <div class="f-center-x f-cursor" (click)="link('/user/create_wallet')">{{'home.create' | translate}}</div>
         </div>
+
         <!-- 行情   -->
         <div class="home-ticker">
             <div class="home-ticker-tip">
@@ -49,7 +50,7 @@
                     <div class="home-ticker-main-line-item width-nomar f-fontw8">{{item.name}}</div>
                     <div class="home-ticker-main-line-item width-nomar">
                         <span class="f-fontw8">{{tickerListObj[item.pair].close}}</span>
-                        <span>&nbsp;&nbsp;&nbsp;$ {{item.USDT != '--' ? item.USDT: '0.0000'}}</span>
+                        <span>&nbsp;&nbsp;&nbsp;$ {{regular.toBigsells([reset.raleUSDTObject[item.quote] || 0 , tickerListObj[item.pair].close], 4) }}</span>
                     </div>
                     <div class="home-ticker-main-line-item width-change f-fontw8" [ngClass]="{'blue': tickerListObj[item.pair].change > 0, 'red': tickerListObj[item.pair].change < 0}">
                         <span>{{tickerListObj[item.pair].change > 0 ? "+" : ''}}</span>{{regular.toFixed(tickerListObj[item.pair].change * 100, 2)}}%

@@ -10,6 +10,7 @@ import { AuxBtService } from '../../service/aux-bt.service';
 import { regular } from '../../common/util/regular';
 import { TranslateService } from "@ngx-translate/core";
 import { FormatPipe } from '../../pipes/format.pipe';
+import { CONFIG } from '../../common/util/config'
 
 @Component({
   selector: 'app-header',
@@ -18,6 +19,8 @@ import { FormatPipe } from '../../pipes/format.pipe';
 })
 export class HeaderComponent implements OnInit {
     theme: string = this.user.getItem('theme') || 'Light';
+    logo: string = CONFIG.logo || "../../../assets/images/logo-main.svg";
+    logoHome: string = CONFIG.logo || "../../../assets/images/bithumb.svg";
     routerLink: string = this.location.pathname;
     language: string;
     shouLanguage: boolean;
@@ -205,7 +208,7 @@ export class HeaderComponent implements OnInit {
         this.service.timestamp().then( (res:any) => {
             if(res.status === 0) {
                 this.date = res.data;
-                this.time = new FormatPipe().transform(new FormatPipe().transform(this.date, 5), 2);
+                this.time = new FormatPipe().transform(new FormatPipe().transform(this.date, 3), 2);
                 this.getDate();
             }
         })
@@ -215,6 +218,6 @@ export class HeaderComponent implements OnInit {
      * getDate
      */
     getDate(){
-        setInterval(() => { this.date+= 60000 ;  this.time = new FormatPipe().transform(new FormatPipe().transform(this.date, 5), 2) }, 60000);
+        setInterval(() => { this.date+= 60000 ;  this.time = new FormatPipe().transform(this.date, 2) }, 60000);
     }
 }

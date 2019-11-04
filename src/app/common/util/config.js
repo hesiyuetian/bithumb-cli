@@ -1,5 +1,5 @@
 import Data from './environment.json'
 
-const debug = 'UAT';
+const debug = 'CLI';
 
 export const CONFIG = Data[debug];

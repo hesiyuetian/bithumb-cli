@@ -34,19 +34,19 @@
                 </ul>
             </div>
         </div>
-        <div class="main-body-col1 f-cursor" tabIndex="4" (click)="select('theme', true)" (blur)="select('theme', false)">
-            <div class="main-body-col1-l">{{'set.theme' | translate}}</div>
-             <div class="main-body-col1-r">
-                <span>
-                    {{'set.'+theme | translate}}
-                    <label class="iconfont" [ngClass]="{'iconfont1': themeStatus}">&#xe771;</label>
-                </span>
-                <ul *ngIf="themeStatus">
-                    <li (click)="selectContent('theme', 'Light');$event.stopPropagation();"><span>{{'set.light' | translate}}</span></li>
-                    <li (click)="selectContent('theme', 'Dark');$event.stopPropagation();"><span>{{'set.dark' | translate}}</span></li>
-                </ul>
-            </div>
-        </div>
+<!--        <div class="main-body-col1 f-cursor" tabIndex="4" (click)="select('theme', true)" (blur)="select('theme', false)">-->
+<!--            <div class="main-body-col1-l">{{'set.theme' | translate}}</div>-->
+<!--             <div class="main-body-col1-r">-->
+<!--                <span>-->
+<!--                    {{'set.'+theme | translate}}-->
+<!--                    <label class="iconfont" [ngClass]="{'iconfont1': themeStatus}">&#xe771;</label>-->
+<!--                </span>-->
+<!--                <ul *ngIf="themeStatus">-->
+<!--                    <li (click)="selectContent('theme', 'Light');$event.stopPropagation();"><span>{{'set.light' | translate}}</span></li>-->
+<!--                    <li (click)="selectContent('theme', 'Dark');$event.stopPropagation();"><span>{{'set.dark' | translate}}</span></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="main-body-col1">
             <div class="main-body-col1-l">{{'set.currentHeight' | translate}}</div>
             <div class="main-body-col1-r">{{currentHeight}}</div>

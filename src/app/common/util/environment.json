@@ -2,11 +2,26 @@
   "UAT": {
     "channel": "XoBPP2vxxHdSFpLaF86EckyjoUWjiGSe3y",
     "wsUrl": "http://10.0.151.135:9001",
-    "sdkUrl": "http://47.103.100.47:43026",
+    "sdkUrl": "http://10.0.151.135:43026",
     "apiUrl": "http://10.0.151.135:8888",
     "tag": "UAT",
     "name": "XTAR",
-    "version": 83951616
+    "maker_fee_rate": 0,
+    "taker_fee_rate": 0,
+    "logo": "",
+    "chain_id": 3
+  },
+  "CLI": {
+    "channel": "XoBPP2vxxHdSFpLaF86EckyjoUWjiGSe3y",
+    "wsUrl": "http://10.0.151.135:9001",
+    "sdkUrl": "http://10.0.151.135:43026",
+    "apiUrl": "http://10.0.151.135:8888",
+    "tag": "UAT",
+    "name": "Bithumb",
+    "maker_fee_rate": 0,
+    "taker_fee_rate": 0,
+    "logo": "https://images.lyra.site/bithumb.svg",
+    "chain_id": 3
   },
   "TEST": {
     "channel": "XoBPP2vxxHdSFpLaF86EckyjoUWjiGSe3y",
@@ -15,7 +30,10 @@
     "apiUrl": "http://test-api.xtardex.com",
     "tag": "TEST",
     "name": "XTAR",
-    "version": 83951616
+    "maker_fee_rate": 0,
+    "taker_fee_rate": 0,
+    "logo": "",
+    "chain_id": 3
   },
   "BETA": {
     "channel": "XjE2faGDzVGCm7z5AirgcyDUwGWpw7xAMn",
@@ -24,7 +42,10 @@
     "apiUrl": "https://beta-api.lyra.site",
     "tag": "BETA",
     "name": "XTAR",
-    "version": 16842752
+    "maker_fee_rate": 0,
+    "taker_fee_rate": 0,
+    "logo": "",
+    "chain_id": 3
   },
   "AUTOTEST": {
     "channel": "XjE2faGDzVGCm7z5AirgcyDUwGWpw7xAMn",
@@ -33,7 +54,10 @@
     "apiUrl": "http://autotest-api.xtardex.com",
     "tag": "AUTOTEST",
     "name": "XTAR",
-    "version": 83951616
+    "maker_fee_rate": 0,
+    "taker_fee_rate": 0,
+    "logo": "",
+    "chain_id": 3
   },
   "PRO": {
     "channel": "AUZ4d82hCeLhKS6nhvz9gRApKfjJwyVQ8B",
@@ -42,6 +66,9 @@
     "apiUrl": "https://beta-xtar.lyra.site",
     "tag": "PRO",
     "name": "XTAR",
-    "version": 65536
+    "maker_fee_rate": 0,
+    "taker_fee_rate": 0,
+    "logo": "",
+    "chain_id": 3
   }
 }

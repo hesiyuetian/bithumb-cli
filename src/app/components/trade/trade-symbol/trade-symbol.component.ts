@@ -14,7 +14,8 @@ import { ConterAlertComponent } from '../../../components/alert/conter-alert/con
 import { Loadings } from '../../../components/loadings/loadings';
 import { resetData } from '../../../common/util/resetData'
 import {Subscription} from 'rxjs';
-
+import { DialogPwdComponent } from '../../../components/dialog-pwd/dialog-pwd.component'
+import {AuxBtService} from '../../../service/aux-bt.service';
 @Component({
 	selector: 'app-trade-symbol',
 	templateUrl: './trade-symbol.component.html',
@@ -71,6 +72,7 @@ export class TradeSymbolComponent implements OnInit, OnDestroy {
 		public dialog: DialogController,
 		private load: Loadings,
 		private reset: resetData,
+        public auxBt: AuxBtService,
 	) {
 		this.activatedRouter.params.subscribe(params => {
             this.symbol = this.activatedRouter.snapshot.params['symbol'] || 'BTC_USDT';
@@ -124,19 +126,11 @@ export class TradeSymbolComponent implements OnInit, OnDestroy {
 		if (!this.tickerList || this.tickerList.length == 0) {
 			return
 		}
-		// let findIndex = this.tickerList.findIndex((val) => {
-		// 	return val.pair === data.pair;
-		// });
-		// if (findIndex != -1 && this.tickerList[findIndex].v < data.v) {
-		// 	this.tickerList[findIndex].v = data.v;
-		// 	this.tickerList[findIndex].close = data.close;
-		// 	this.tickerList[findIndex].change = data.change;
-		// 	this.analysisTicker();
-		// }
         this.tickerListObj[data.pair] = {
             close: data.close,
             change: data.change,
         };
+        this.reset.caleUSDT(this.tickerListObj);
 		this.subTickList(this.tickerList);
 	}
 
@@ -205,7 +199,7 @@ export class TradeSymbolComponent implements OnInit, OnDestroy {
                         change: item.change,
                     }
 				}
-
+                this.reset.caleUSDT(this.tickerListObj);
 				this.subTickList(res.data);
 				this.tickerLoadStatus = false;
 				this.tickerList = res.data;
@@ -297,7 +291,7 @@ export class TradeSymbolComponent implements OnInit, OnDestroy {
      */
 	check(i, active) {
 		if (this.user.token()) {
-			this.checkTicker(i.pair, active);
+		    this.checkTicker(i.pair, active)
 		} else {
 			this.unLogin();
 		}
@@ -330,18 +324,32 @@ export class TradeSymbolComponent implements OnInit, OnDestroy {
 			this.isFavStatus = false;
 			let data = {
 				pair: ticker,
-				collect: active
+				collect: active,
+                sig: ''
 			};
-			this.service.collectPair(data).then((res: any) => {
-				this.isFavStatus = true;
-				if(res.status === 0){
-					this.collectPairList = res.data;
-					this.subCollectList(res.data);
-					this.analysisTicker();
-				}else{
-					this.load.tipErrorShow(res.msg)
-				}
-			})
+
+			const success = (res:any) => {
+                this.isFavStatus = true;
+                if(res.status === 0){
+                    this.dialog.destroy();
+                    this.collectPairList = res.data;
+                    this.subCollectList(res.data);
+                    this.analysisTicker();
+                }else{
+                    this.load.tipErrorShow(res.msg)
+                }
+            };
+
+			const unLockAccount = (res:any) => {
+                data.sig = this.auxBt.collectSign(data,res);
+                data.sig && this.service.collectPair(data).then( res => { success(res) })
+            };
+
+			const close = res => {
+                this.isFavStatus = true;
+            };
+
+			this.auxBt.regularPwd(unLockAccount, close)
 		}
 	}
 

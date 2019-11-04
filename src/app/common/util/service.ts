@@ -425,13 +425,13 @@ export class service {
     }
 
     /**
-     * 获取BTC--->USD汇率
+     * 获取USDT--->USD汇率
      */
-    getOkexTime(){
+    getUsdtToUsd(){
         return axios.get('https://min-api.cryptocompare.com/data/price', {
-        　　params: {
-                fsym: 'BTC',
-                tsyms: 'USDT',
+            params: {
+                fsym: 'USDT',
+                tsyms: 'USD',
             }
         })
     }

@@ -215,8 +215,10 @@ export class FootComponent implements OnInit, OnDestroy {
 				this.cancelOrder(orderId)
 			},
 			callbackCancel: ()=>{ },
-		  }
-		this.dialog.createFromComponent(ConterAlertComponent,config)
+		  };
+
+		if(this.auxBt.isExpirTime()) this.cancelOrder(orderId);
+        else this.dialog.createFromComponent(ConterAlertComponent,config)
 	}
 
     /**
@@ -225,17 +227,25 @@ export class FootComponent implements OnInit, OnDestroy {
      */
     cancelOrder(ids) {
         let params = {
-            ids: ids
+            ids: ids,
+            sig: ''
         };
         const success = data => {
             if (data.status === 0) {
+                this.dialog.destroy();
                 this.load.tipSuccessShow(this.translate.instant('common.cancleSuccess'));
                 this.init();
             } else {
                 this.load.tipErrorShow(data.msg);
             }
         };
-        this.service.cancel(params).then(res => success(res))
+
+        const unLockAccount = data => {
+            params.sig = this.auxBt.cancelOrderSign(params, data);
+            params.sig && this.service.cancel(params).then(res => success(res))
+        };
+
+        this.auxBt.regularPwd(unLockAccount)
     }
 
     /**

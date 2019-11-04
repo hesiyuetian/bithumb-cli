@@ -80,6 +80,10 @@ export class AppComponent {
 
     ngOnInit(){
         this.scoke.onCenten(false);
+        var reg = /^[0-9]*$/;
+        if(reg.test('121212312')) { // 校验位数
+            console.log('true')
+        }else console.log('false')
     }
 
     init(){

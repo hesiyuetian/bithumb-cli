@@ -1,7 +1,6 @@
 // import {riskResultList} from '../../pages/risk/mock-risk'
 import { FormatPipe } from '../../pipes/format.pipe'
 import BigNumber from "bignumber.js";
-import zxcvbn from 'zxcvbn';
 import { Loadings } from '../../components/loadings/loadings'
 import { User } from './user'
 const load = new Loadings;
@@ -328,8 +327,6 @@ export class regular {
         (!!!txt || txt.length < 8) && (lvl = 0);
 
         return lvl;
-
-        // return zxcvbn(txt).score;
     }
 
     // 组装深度数据 [price,amount,v] ==> {price:'',amount:'',v:''}

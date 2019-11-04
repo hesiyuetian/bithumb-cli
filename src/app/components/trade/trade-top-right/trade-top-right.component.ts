@@ -535,7 +535,7 @@ export class TradeTopRightComponent implements OnInit, OnDestroy {
 					return ele.pair === this.symbol
 				});
 				this.tickerList = data.data[Index];
-				this.setTitle(this.tickerList.close || 0);
+				this.setTitle(this.tickerList.close ? this.tickerList.close : 0);
 				this.scoket.setTick(this.tickerList);
 				this.setPrice(this.tickerList.close || 0);
 			} else {

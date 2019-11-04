@@ -6,6 +6,7 @@ import {service} from '../../common/util/service';
 import {regular} from '../../common/util/regular';
 import {resetData} from '../../common/util/resetData';
 import {ScokeIoService} from '../../service/scoke-io.service';
+import { CONFIG } from '../../common/util/config'
 declare var $
 @Component({
     selector: 'app-home',
@@ -14,6 +15,7 @@ declare var $
 })
 export class HomeComponent implements OnInit, OnDestroy {
     subServe: Subscription = new Subscription();
+    logoHome: string = CONFIG.logo || "../../../assets/images/bithumb.svg";
 
     public explainList: Array<any> = [
         {name: 'n1', val: 'n1t'},
@@ -110,19 +112,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 		if (!this.tickerList || this.tickerList.length == 0) {
 			return
 		}
-		// let findIndex = this.tickerList.findIndex((val) => {
-		// 	return val.pair === data.pair;
-		// });
-		// if (findIndex != -1 && this.tickerList[findIndex].v < data.v) {
-		// 	this.tickerList[findIndex].close = data.close;
-		// 	this.tickerList[findIndex].change = data.change;
-		// 	this.tickerList[findIndex].base_vol = data.base_vol;
-		// } this.pairObj[item.pair]
         this.tickerListObj[data.pair] = {
             close: this.regular.numFormat( this.regular.toFixed(data.close, Number(this.pairObj[`${data.pair}`].split("_")[1] || 4)) ),
             base_vol: this.regular.numFormat( this.regular.toFixed(data.base_vol, Number(this.pairObj[`${data.pair}`].split("_")[0] || 4)) ),
             change: data.change,
-        }
+        };
+        this.reset.caleUSDT(this.tickerListObj)
 	}
 
     /**
@@ -150,9 +145,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 					item['amountPrecision'] = Number(this.pairObj[`${item.pair}`].split("_")[0] || 4);
 					item['priciPrecision'] = Number(this.pairObj[`${item.pair}`].split("_")[1] || 4);
 					item['name'] = this.coinListObj[base].name;
-					// item['base_vol'] = this.regular.numFormat( this.regular.toFixed(item.base_vol, item['amountPrecision']) );
-					// item['close'] = this.regular.numFormat( this.regular.toFixed(item.close, item['priciPrecision']) );
-                    item['USDT'] = null;
+					item['quote'] = this.splitPair(item.pair, 1);
                     this.tickerListObj[item.pair] = {
                         close: this.regular.numFormat( this.regular.toFixed(item.close, item['priciPrecision']) ),
                         base_vol: this.regular.numFormat( this.regular.toFixed(item.base_vol, item['amountPrecision']) ),
@@ -160,23 +153,10 @@ export class HomeComponent implements OnInit, OnDestroy {
                     }
 				}
                 this.tickerList = res.data;
-				// this.raleUSD();
-                // this.raleUsdtTime = setInterval(() => {
-                //     this.raleUSD();
-                // }, 3000)
+                this.reset.caleUSDT(this.tickerListObj)
 			}
 		})
 	}
-
-    /**
-     * raleUSD
-     */
-    async raleUSD(){
-       if(!this.btcToUsdt) this.btcToUsdt = await this.reset.getUsdt();
-        for(let item of this.tickerList){
-            item['USDT'] = this.reset.raleUsdt(item.pair.split("_")[0],this.tickerList, 1, this.btcToUsdt, item.pair);
-        }
-    }
 
     go(link){
         if(link) window.open(link);

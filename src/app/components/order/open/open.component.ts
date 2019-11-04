@@ -9,6 +9,7 @@ import { FormatPipe } from '../../../pipes/format.pipe'
 import { SkinServiceService } from '../../../service/skin-service.service'
 import { ConterAlertComponent } from '../../alert/conter-alert/conter-alert.component'
 import { DialogController } from '../../../controller/dialog'
+import {AuxBtService} from '../../../service/aux-bt.service';
 
 @Component({
 	selector: 'app-open',
@@ -24,7 +25,6 @@ export class OpenComponent implements OnInit {
 	status: String = '';
 	quoteSymbol: String = '';
 
-	isCancel: boolean = false;
 	loadTrade: boolean = true;
 
 	directionList: Array<any> = [
@@ -52,7 +52,8 @@ export class OpenComponent implements OnInit {
 		public regular: regular,
 		private load: Loadings,
 		public translate: TranslateService,
-	) {
+        public auxBt: AuxBtService
+    ) {
 		this.skin.getLangObservable().subscribe((res)=>{
 			this.regular.setTitle(this.translate.instant('Title.openOrder'))
         })
@@ -86,7 +87,9 @@ export class OpenComponent implements OnInit {
 			},
 			callbackCancel: ()=>{ },
 		  };
-		this.dialog.createFromComponent(ConterAlertComponent,config)
+
+        if(this.auxBt.isExpirTime()) this.cancelOrder(orderId);
+        else this.dialog.createFromComponent(ConterAlertComponent,config)
 	}
 
     /**
@@ -120,7 +123,7 @@ export class OpenComponent implements OnInit {
 			if(data.status === 0){
 				this.totalRow = data.data.total;
 				for(let item of data.data.list){
-					item.amountPrecision = Number(this.pairObj[`${item.pair.replace(/_/g, '/')}`].split("_")[0] || 4);
+                    item.amountPrecision = Number(this.pairObj[`${item.pair.replace(/_/g, '/')}`].split("_")[0] || 4);
 					item.priciPrecision = Number(this.pairObj[`${item.pair.replace(/_/g, '/')}`].split("_")[1] || 4)
 				}
 				this.orderList = data.data.list;
@@ -155,18 +158,25 @@ export class OpenComponent implements OnInit {
      */
 	cancelOrder(orderId) {
 		let params = {
-			ids: orderId
+			ids: orderId,
+            sig: ''
 		};
 		const success = data => {
-			this.isCancel = false;
 			if (data.status === 0) {
+                this.dialog.destroy();
 				this.load.tipSuccessShow(this.translate.instant('common.cancleSuccess'));
 				this.init();
 			} else {
 				this.load.tipErrorShow(data.msg);
 			}
 		};
-		this.service.cancel(params).then(res => success(res))
+
+        const unLockAccount = data => {
+            params.sig = this.auxBt.cancelOrderSign(params, data);
+            params.sig && this.service.cancel(params).then(res => success(res))
+        };
+
+        this.auxBt.regularPwd(unLockAccount)
 	}
 
 	startChangeDate(date){

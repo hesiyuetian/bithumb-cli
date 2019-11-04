@@ -9,14 +9,14 @@ export class AddInvedtorService {
   constructor() {
 
   }
-  
+
   get(){
 
   }
 
   /**
    * 监听订阅
-   * @param type 
+   * @param type
    */
   getObservable(): Observable<any> {
     return this.subject.asObservable();
@@ -24,13 +24,9 @@ export class AddInvedtorService {
 
   /**
    * 设置订阅
-   * @param type 
+   * @param type
    */
   set(type){
     this.subject.next(type);
   }
-  
-
-  
-
 }

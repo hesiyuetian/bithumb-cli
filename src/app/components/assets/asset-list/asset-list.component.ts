@@ -85,19 +85,14 @@ export class AssetListComponent implements OnInit, OnDestroy {
     // 是否有托管方
     haveOutAsset: String;
     // 行情数据
-    // tickerListObj: Object = {};
+    tickerListObj: Object = {};
     tickerList: Array<any> = [];
     // 币种信息
     coinsData: Array<any> = [];
-    // BTC兑USDT的估值
-    btcToUsdt: number = 1;
+
     //bt 精度
     xtarPrecision: number = 8;
-    // 挖矿奖励
-    bonus: {
-        lockedBonus: '0',
-        unlockedBonus: '0',
-    };
+
 
     constructor(
         private service: service,
@@ -141,15 +136,6 @@ export class AssetListComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * 获取挖矿奖励信息
-     */
-    getBonus() {
-        this.auxBt.getBonus(this.user.userId()).then((res: any) => {
-            this.bonus = res
-        })
-    }
-
-    /**
      * getPairsList
      * 获取行情数据 - new
      */
@@ -157,6 +143,10 @@ export class AssetListComponent implements OnInit, OnDestroy {
         let data = {};
         this.service.getPairsList(data).then((res: any) => {
             if (res.status == 0) {
+                for(let item of res.data){
+                    this.tickerListObj[item.pair] = item.close
+                }
+                this.reset.caleUSDT(res.data);
                 this.tickerList = res.data;
                 this.getAssetList();
             }
@@ -217,39 +207,17 @@ export class AssetListComponent implements OnInit, OnDestroy {
      * 异步处理资产数据
      */
     async setAsyncAsset() {
-        this.btcToUsdt = await this.reset.getUsdt();
         for (let val of this.assetList) {
             for (let item of this.coinsData) {
                 if (val.symbol === item.symbol) {
                     !val.haveOutAsset && await this.auxBt.getBlanace(val.contractAddress).then((res: any) => {
                         val.balance = this.regular.toFixed(res.result / (10 ** item.decimal) || 0, item.decimal)
                     });
-                    val.btcVal = this.reset.matchPair(val.symbol, this.tickerList, val.available) || 0;
-                    val.usdtVal = this.reset.raleUsdt(val.symbol, this.tickerList, val.available, this.btcToUsdt) || 0;
+                    val.usdtVal = this.reset.raleUsdt(val.symbol, val.available, this.tickerListObj);
+                    val.btcVal = this.reset.matchPair(val.symbol, val.available, val.usdtVal, this.tickerListObj);
                 }
             }
         }
-    }
-
-    /**
-     * raleFee
-     * 计算手续费和托管费估值
-     * @param symbol
-     * @param available
-     */
-    raleFee(symbol, available) {
-        return this.reset.raleUsdt(symbol, this.tickerList, available, this.btcToUsdt) || 0;
-    }
-
-
-    isNumber(val) {
-        var reg = /^[0-9]+.?[0-9]*$/;
-        if(reg.test(val)) return true;
-        else return false
-    }
-
-    isFinite(data) {
-        return isFinite(data)
     }
 
     /**

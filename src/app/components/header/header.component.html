@@ -3,8 +3,8 @@
         <!-- logo -->
         <div class="nav-left">
             <a routerLink="/" class="logo">
-                <img *ngIf="routerUrl == 'main'" src="../../../assets/images/bithumb.svg" alt="">
-                <img *ngIf="routerUrl != 'main'" src="../../../assets/images/logo-main.svg" alt="">
+                <img *ngIf="routerUrl == 'main'" [src]=logoHome alt="">
+                <img *ngIf="routerUrl != 'main'" [src]=logo alt="">
             </a>
             <span>{{time}}</span>
         </div>

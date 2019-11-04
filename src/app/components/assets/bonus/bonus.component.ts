@@ -145,6 +145,9 @@ export class BonusComponent implements OnInit {
             let option = {
                 callback: res => {
                     FN(res);
+                },
+                close: res => {
+
                 }
             };
             this.dialog.createFromComponent(DialogPwdComponent,option);

@@ -24,7 +24,8 @@
 
                         <span class='trad-content-left-now-left-price'>
                             <span [ngClass]="{'blue': tickerList?.change > 0, 'red': tickerList?.change < 0}">{{regular.toFixed(tickerList?.close || 0 , precision.pricePrecision)}}</span>
-                            <span class="usdt f-opacity">≈&nbsp;${{usdtVal}}</span>
+<!--                            <span class="usdt f-opacity">≈&nbsp;${{usdtVal}}</span>-->
+                            <span class="usdt f-opacity">≈&nbsp;${{regular.toBigsells([resetData.raleUSDTObject[symbol.split("_")[1]] || 0 , tickerList?.close || 0], 4) }}</span>
                         </span>
 
                         <div class='trad-content-left-now-left-item'>

@@ -25,6 +25,7 @@ export class TradeTopLeftTradComponent implements OnInit, OnDestroy {
     subServe: Subscription = new Subscription();
     // 界面模式  traditional ： 传统模式      tile ： 平铺模式
     @Input() modeSel: string = 'traditional';
+
     side = 'buy';
 
 	// 当前币对
@@ -266,8 +267,8 @@ export class TradeTopLeftTradComponent implements OnInit, OnDestroy {
             price: this.buyPrice,     //  价格
             amount: this.buyNum,    //  quote成交量
             user: this.user.userId(),
-            maker_fee_rate: 0, // 单位：万分之一
-            taker_fee_rate: 0, // 单位：万分之一
+            maker_fee_rate: CONFIG.maker_fee_rate, // 单位：万分之一
+            taker_fee_rate: CONFIG.taker_fee_rate, // 单位：万分之一
         };
 
         this.buyNum = null;
@@ -308,8 +309,8 @@ export class TradeTopLeftTradComponent implements OnInit, OnDestroy {
             price: this.sellPrice,     //  价格
             amount: this.sellNum,    //  quote成交量
             user: this.user.userId(),
-            maker_fee_rate: 0, // 单位：万分之一
-            taker_fee_rate: 0, // 单位：万分之一
+            maker_fee_rate: CONFIG.maker_fee_rate, // 单位：万分之一
+            taker_fee_rate: CONFIG.taker_fee_rate, // 单位：万分之一
         };
 
         this.sellNum = null;
@@ -349,7 +350,7 @@ export class TradeTopLeftTradComponent implements OnInit, OnDestroy {
                 return ele.pair === this.symbol
             });
 
-            params.version = CONFIG.version;
+            params.chain_id = CONFIG.chain_id;
             params.pair = coins[0].pair_address;
             params.expire = 0;
             params.channel = CONFIG.channel;

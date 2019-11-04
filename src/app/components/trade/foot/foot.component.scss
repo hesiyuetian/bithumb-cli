@@ -119,7 +119,7 @@
                 position: relative;
                 top: -2px;
                 .detail{
-                    @include mixin-font-color_detail();
+                    @include mixin-color-blue();
                     position: relative;
                     label{
                         display: inline-block;
@@ -140,7 +140,7 @@
                 }
             }
             .action{
-                @include mixin-color-blue();
+                @include mixin-font-sell-color();
             }
 
             &-detail{

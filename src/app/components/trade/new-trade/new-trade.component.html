@@ -15,7 +15,7 @@
                 <li class='qcfd f-cursor f-hover' [ngClass]="{'act-trade-new': item.isnew}" *ngFor="let item of newTradList;let i = index;">
                     <div [ngClass]="{'red': item.side !== 0,'blue': item.side === 0}">{{ regular.toFixed(item.price || 0, precision.pricePrecision) }}</div>
                     <div>{{ regular.toFixed(item.amount || 0, precision.amountPrecision)}}</div>
-                    <div style="overflow-x: hidden">{{(item.timestamp * 1000 ) | format:1}}</div>
+                    <div style="overflow-x: hidden">{{ item.time | utcTolocal | format:1}}</div>
                 </li>
             </div>
         </ng-container>

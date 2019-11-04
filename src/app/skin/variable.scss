@@ -5,10 +5,8 @@
 $buy_color : #43EDBA;   // 买
 $sell_color : #FF4A76;  //卖
 $color_blue: #4181FF;  //激活的Tab 或者 文字
-$color_detail: #43CEED; // 订单详情文案颜色
+$color_detail: #4970C4; // 订单详情文案颜色
 $btn_hover: #183DFF; // 按钮hover背景
-
-
 
 
 
@@ -50,6 +48,7 @@ $bg: #fff;
 $color: #003a61;                // 字体颜色  SEC/N02
 $color-N03: #EC7000;                // 字体颜色  Pri/N03
 $color-main: #FA9128;           // 主题橙字体颜色  Pri/P01
+$color-main-cli: #646EE6;           // 主题橙字体颜色  Pri/P01  只适用于CLI
 $color-act: #003a61;          // 字体颜色    SEC/N01
 $border-color: rgba(0, 58, 97 , .1);     // 线 Sec/N03
 $border-color-zh: rgba(0,0,0,.6);     // 占位背景  SEC/S01
@@ -59,10 +58,14 @@ $dialog-shadow: rgba(248,249,251, 0.06);      // 弹框阴影
 $background-depth: #fff;   // 深度合并背景色
 $buy_color-buy: #46C17F;   // 买    Pri/P06
 $sell_color-sell: #EF7059;  //卖    Pri/P04
-$btn: -webkit-linear-gradient(180deg, #FA9128 0%, #FA9128 100%);   // 按钮背景色
-$btn-disabled: -webkit-linear-gradient(180deg, #FA9128 0%, #FA9128 100%);   // 按钮背景色  disabled
-$btn-hover: -webkit-linear-gradient(180deg, #FFAD5B 0%, #FFAD5B 100%);   // 按钮hover背景色
-$btn-primary: rgba(243, 230, 216, 1);   // 按钮背景色 (不推荐的操作按钮)
+//$btn: -webkit-linear-gradient(180deg, #FA9128 0%, #FA9128 100%);   // 按钮背景色
+$btn: -webkit-linear-gradient(180deg, #7E93FF 0%, #7E93FF 100%);   // 按钮背景色   只适用于CLI
+//$btn-disabled: -webkit-linear-gradient(180deg, #FA9128 0%, #FA9128 100%);   // 按钮背景色  disabled
+$btn-disabled: -webkit-linear-gradient(180deg, #7E93FF 0%, #7E93FF 100%);   // 按钮背景色  disabled   只适用于CLI
+//$btn-hover: -webkit-linear-gradient(180deg, #FFAD5B 0%, #FFAD5B 100%);   // 按钮hover背景色
+$btn-hover: -webkit-linear-gradient(180deg, #646EE6 0%, #646EE6 100%);   // 按钮hover背景色    只适用于CLI
+//$btn-primary: rgba(243, 230, 216, 1);   // 按钮背景色 (不推荐的操作按钮)
+$btn-primary: rgba($color: #7E93FF, $alpha: 1.0);   // 按钮背景色 (不推荐的操作按钮) // CLI
 
 $bg-btn: rgba(255,255,255, .1);    // 橙色背景下 btn
 $bg-btn-hover: rgba(255,255,255, 1);   // 橙色背景下 hover

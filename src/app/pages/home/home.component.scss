@@ -13,8 +13,7 @@
         @include mixin-font-sell-color();
     }
     &-top{
-        background: url('../../../assets/images/login_bg.jpg') no-repeat;
-        // background: url('../../../assets/images/login_bg.svg') no-repeat center center;
+        @include mixin-bg-banner-ci();
         height: 736px;
         width: 100%;
         img{
@@ -155,7 +154,8 @@
             border-radius: 50%;
             position: absolute;
             right: -22px;
-            background: #FA9128;
+            //background: #FA9128;
+            background: #646EE6; // CLI
             z-index: 9;
             color: #fff;
             font-weight: 800;
